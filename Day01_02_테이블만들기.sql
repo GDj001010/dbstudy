@@ -5,7 +5,7 @@
     3. 표 형식으로 데이터를 보관한다.
     4. 테이블 기본 용어
         1) 열 : column, 속성(attribute),   필드(field)
-        2) 행 : row, 개체(entity),         레코드(record)    
+        2) 행 : row,    개체(entity),      레코드(record)    
 */
 
 /*
@@ -32,6 +32,11 @@
         UNIQUE
     3. 값의 제한
         CHECK
+    4. PK (기본키) NOT NULL + UNIQUE
+        PRIMARY KEY     NOT NULL + UNIQUE 한 개체를 개체무결성이라 부름.
+                    1(PK) : M(FK) (1 대 다관계)
+    5. FK (외래키, 참조키)      참조 무결성 
+        FOREIGN KEY     FK는 PK를 참조한다. FK는 참조하는 값만 가질 수 있다.
 */
 -- 예시 테이블
 DROP TABLE PRODUCT;
