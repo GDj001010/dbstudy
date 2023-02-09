@@ -101,7 +101,7 @@ COMMIT;
 -- 데이터 수정하기
 -- 1. 부서번호(DEPT_NO)가 1인 부서의 지역(LOCATION)을 '경기'로 수정하시오.
 UPDATE DEPARTMENT_TBL 
-   SET LOCATION = '경기'  -- 수정할 내용(여기서 등호는 대입 연산자이다.) 경기를 로케이션으로 보낸다
+   SET LOCATION = '경기'  -- 수정할 내용(여기서 등호는 대입 연산자이다.) 경기를 LOCATION으로 보낸다
  WHERE DEPT_NO = 1;       -- 조건문(여기서 등호는 비교 연산자이다.)
 COMMIT;
     
