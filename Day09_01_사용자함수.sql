@@ -87,12 +87,43 @@ SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, FUNC3(EMPLOYEE_ID)
   FROM EMPLOYEES;
 
 
+-- 함수 MY_CEIL 정의
+CREATE OR REPLACE FUNCTION MY_CEIL(N NUMBER, DIGIT NUMBER)
+RETURN NUMBER
+IS
+BEGIN
+    RETURN CEIL(N * POWER(10, DIGIT)) / POWER(10, DIGIT);
+END;
+
+
+-- 함수 MY_CEIL 호출
+SELECT
+        MY_CEIL(111.111, 2)         -- 소수2자리 올림
+      , MY_CEIL(111.111, 1)         -- 소주1자리 올림
+      , MY_CEIL(111.111, 0)         -- 정수로 올림
+      , MY_CEIL(111.111, -1)        -- 일의자리 올림
+      , MY_CEIL(111.111, -2)        -- 십의자리 올림
+  FROM DUAL;
 
 
 
+-- 함수 MY_FLOOR 정의
+CREATE OR REPLACE FUNCTION MY_FLOOR(N NUMBER, DIGIT NUMBER)
+RETURN NUMBER
+IS
+BEGIN
+    RETURN FLOOR(N * POWER(10, DIGIT)) / POWER(10, DIGIT);
+END;
 
 
-
+-- 함수 MY_CEIL 호출
+SELECT
+        MY_FLOOR(999.999, 2)         -- 소수2자리 내림
+      , MY_FLOOR(999.999, 1)         -- 소주1자리 내림
+      , MY_FLOOR(999.999, 0)         -- 정수로 내림
+      , MY_FLOOR(999.999, -1)        -- 일의자리 내림
+      , MY_FLOOR(999.999, -2)        -- 십의자리 내림
+  FROM DUAL;
 
 
 
