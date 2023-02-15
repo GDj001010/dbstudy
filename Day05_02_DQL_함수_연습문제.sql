@@ -75,12 +75,23 @@ SELECT
  WHERE DEPARTMENT_ID = 80
  ORDER BY SALARY DESC;
 -- 13. EMPLOYEES 테이블에서 전체 사원의 근무 개월 수를 정수로 조회하시오. 1개월 1일을 근무했다면 2개월을 근무한 것으로 처리해서 조회하시오.
-SELECT 
-       CHIL
+SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID
+     , CEIL(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)) || '개월' AS 근무개월수
   FROM EMPLOYEES;
 -- 14. EMPLOYEES 테이블에서 PHONE_NUMBER에 따른 지역(REGION)을 조회하시오.
 -- PHONE_NUMBER가 011로 시작하면 'MOBILE', 515로 시작하면 'EAST', 590으로 시작하면 'WEST', 603으로 시작하면 'SOUTH', 650으로 시작하면 'NORTH'로 조회하시오.
 
+SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID
+     , CASE
+        WHEN SUBSTR(PHONE_NUMBER, 1, 3) = 011 THEN 'MOBILE'
+        WHEN SUBSTR(PHONE_NUMBER, 1, 3) = 515 THEN 'EAST'
+        WHEN SUBSTR(PHONE_NUMBER, 1, 3) = 590 THEN 'WEST'
+        WHEN SUBSTR(PHONE_NUMBER, 1, 3) = 603 THEN 'SOUTH'
+        ELSE 'NORTH'
+    END AS REGION
+    FROM EMPLOYEES;
+        
+        
 -- 15. EMPLOYEES 테이블에서 근무 개월 수가 240개월 이상이면 '퇴직금정산대상', 아니면 빈 문자열('')을 조회하시오.
 
 -- 16. EMPLOYEES 테이블에서 SALARY 평균이 10000 이상인 부서의 DEPARTMENT_ID와 SALARY 평균을 조회하시오. 평균은 정수로 내림처리하시오.
@@ -92,3 +103,12 @@ SELECT
 -- 19. DEPARTMENTS 테이블에서 LOCATION_ID로 그룹화하여 각 그룹의 사원수를 조회하시오. MANAGER_ID가 없는 지역은 제외하시오.
 
 -- 20. DEPARTMENTS 테이블에서 DEPARTMENT_NAME의 첫 2글자로 그룹화하여 각 그룹의 사원수를 조회하시오. 'IT'와 'Co'인 부서만 조회하시오.
+
+
+
+
+
+
+
+
+
