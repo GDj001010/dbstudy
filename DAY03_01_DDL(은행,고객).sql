@@ -1,13 +1,13 @@
 /*
     DDL
     1. DaTa Definition Language
-    2. ë°ì´í„° ì •ì˜ì–´
-    3. ë°ì´í„°ë² ì´ìŠ¤ ê°ì²´(USER, TABLE, SEQUENCE, VIEW, INDEX ë“±)ë¥¼ ìƒì„±/ìˆ˜ì •/ì‚­ì œí•˜ëŠ” ì–¸ì–´ì´ë‹¤.
-    4. ì™„ë£Œëœ ìž‘ì—…ì„ ì·¨ì†Œí•  ìˆ˜ ì—†ë‹¤.(COMMIT í•  í•„ìš”ê°€ ì—†ë‹¤. ROLLBACKì„ í•  ìˆ˜ ì—†ë‹¤.)
-    5. ì¢…ë¥˜
-        1) CREATE : ìƒì„±
-        2) ALTER  : ìˆ˜ì •
-        3) DROP   : ì‚­ì œ
+    2. µ¥ÀÌÅÍ Á¤ÀÇ¾î
+    3. µ¥ÀÌÅÍº£ÀÌ½º °´Ã¼(USER, TABLE, SEQUENCE, VIEW, INDEX µî)¸¦ »ý¼º/¼öÁ¤/»èÁ¦ÇÏ´Â ¾ð¾îÀÌ´Ù.
+    4. ¿Ï·áµÈ ÀÛ¾÷À» Ãë¼ÒÇÒ ¼ö ¾ø´Ù.(COMMIT ÇÒ ÇÊ¿ä°¡ ¾ø´Ù. ROLLBACKÀ» ÇÒ ¼ö ¾ø´Ù.)
+    5. Á¾·ù
+        1) CREATE : »ý¼º
+        2) ALTER  : ¼öÁ¤
+        3) DROP   : »èÁ¦
 */
 
 
@@ -32,85 +32,51 @@ CREATE TABLE CUSTOMER_TBL (
 );
 
 /*
-    í…Œì´ë¸” ë³€ê²½í•˜ê¸°
-    1. ì¹¼ëŸ¼ ì¶”ê°€   : ALTER TABLE í…Œì´ë¸”ëª… ADD ì¹¼ëŸ¼ëª… ë°ì´í„°íƒ€ìž… [ì œì•½ì¡°ê±´]  â† ìƒëžµ ê°€ëŠ¥ í•„ìš”í•˜ë©´ ë„£ê¸°
-    2. ì¹¼ëŸ¼ ì‚­ì œ   : ALTER TABLE í…Œì´ë¸”ëª… DROP COLUMN ì¹¼ëŸ¼ëª…
-    3. ì¹¼ëŸ¼ ìˆ˜ì •   : ALTER TABLE í…Œì´ë¸”ëª… MODIFY ì¹¼ëŸ¼ëª… ë°ì´í„°íƒ€ìž… [ì œì•½ì¡°ê±´] (ì¹¼ëŸ¼ì˜ ë°ì´í„°íƒ€ìž…, ì œì•½ì¡°ê±´ ìˆ˜ì •)
-    4. ì¹¼ëŸ¼ ì´ë¦„   : ALTER TABLE í…Œì´ë¸”ëª… RENAME COLUMN ê¸°ì¡´ì¹¼ëŸ¼ëª… TO ì‹ ê·œì¹¼ëŸ¼ëª…
-    5. í…Œì´ë¸” ì´ë¦„ : ALTER TABLE í…Œì´ë¸”ëª… RENAME TO ì‹ ê·œí…Œì´ë¸”ëª…
+    Å×ÀÌºí º¯°æÇÏ±â
+    1. Ä®·³ Ãß°¡   : ALTER TABLE Å×ÀÌºí¸í ADD Ä®·³¸í µ¥ÀÌÅÍÅ¸ÀÔ [Á¦¾àÁ¶°Ç]  ¡ç »ý·« °¡´É ÇÊ¿äÇÏ¸é ³Ö±â
+    2. Ä®·³ »èÁ¦   : ALTER TABLE Å×ÀÌºí¸í DROP COLUMN Ä®·³¸í
+    3. Ä®·³ ¼öÁ¤   : ALTER TABLE Å×ÀÌºí¸í MODIFY Ä®·³¸í µ¥ÀÌÅÍÅ¸ÀÔ [Á¦¾àÁ¶°Ç] (Ä®·³ÀÇ µ¥ÀÌÅÍÅ¸ÀÔ, Á¦¾àÁ¶°Ç ¼öÁ¤)
+    4. Ä®·³ ÀÌ¸§   : ALTER TABLE Å×ÀÌºí¸í RENAME COLUMN ±âÁ¸Ä®·³¸í TO ½Å±ÔÄ®·³¸í
+    5. Å×ÀÌºí ÀÌ¸§ : ALTER TABLE Å×ÀÌºí¸í RENAME TO ½Å±ÔÅ×ÀÌºí¸í
 */
 
--- 1. BANK_TBL í…Œì´ë¸”ì— ì—°ë½ì²˜(BANK_TEL) ì¹¼ëŸ¼ì„ ì¶”ê°€í•˜ì‹œì˜¤.
-ALTER TABLE BANK_TBL 
-    ADD BANK_TEL VARCHAR2(20 BYTE) NOT NULL;
+-- 1. BANK_TBL Å×ÀÌºí¿¡ ¿¬¶ôÃ³(BANK_TEL) Ä®·³À» Ãß°¡ÇÏ½Ã¿À.
+ALTER TABLE BANK_TBL
+    ADD BANK_TEL NUMBER;
 
--- 2. CUSTOMER_TBL í…Œì´ë¸”ì—ì„œ ë‚˜ì´(AGE) ì¹¼ëŸ¼ì„ ì‚­ì œí•˜ì‹œì˜¤.
+-- 2. CUSTOMER_TBL Å×ÀÌºí¿¡¼­ ³ªÀÌ(AGE) Ä®·³À» »èÁ¦ÇÏ½Ã¿À.
 ALTER TABLE CUSTOMER_TBL
     DROP COLUMN AGE;
 
--- 3. BANK_TBL í…Œì´ë¸”ì˜ ì€í–‰ëª…(BANK_NAME) ì¹¼ëŸ¼ì˜ ë°ì´í„°íƒ€ìž…ì„ VARCHAR2(15 BYTE)ë¡œ ìˆ˜ì •í•˜ì‹œì˜¤.
-ALTER TABLE BANK_TBL 
+-- 3. BANK_TBL Å×ÀÌºíÀÇ ÀºÇà¸í(BANK_NAME) Ä®·³ÀÇ µ¥ÀÌÅÍÅ¸ÀÔÀ» VARCHAR2(15 BYTE)·Î ¼öÁ¤ÇÏ½Ã¿À.
+ALTER TABLE BANK_TBL
     MODIFY BANK_NAME VARCHAR2(15 BYTE);
 
--- 4. CUSTOMER_TBL í…Œì´ë¸”ì—ì„œ ê³ ê°ëª…(NAME) ì¹¼ëŸ¼ì˜ ì´ë¦„ì„ CUST_NAMEìœ¼ë¡œ ë³€ê²½í•˜ì‹œì˜¤.
+-- 4. CUSTOMER_TBL Å×ÀÌºí¿¡¼­ °í°´¸í(NAME) Ä®·³ÀÇ ÀÌ¸§À» CUST_NAMEÀ¸·Î º¯°æÇÏ½Ã¿À.
 ALTER TABLE CUSTOMER_TBL
     RENAME COLUMN NAME TO CUST_NAME;
 
 
--- ê°œì¸ì‹¤ìŠµ.
+-- °³ÀÎ½Ç½À.
 
--- 5. CUSTOMER_TBL í…Œì´ë¸”ì— GRADE ì¹¼ëŸ¼ì„ ì¶”ê°€í•˜ì‹œì˜¤. 
---    GRADE ì¹¼ëŸ¼ì€ 'VIP', 'GOLD', 'SILVER', 'BRONZE' ì¤‘ í•˜ë‚˜ì˜ ê°’ë§Œ ê°€ì§ˆ ìˆ˜ ìžˆë„ë¡ CHECK ì œì•½ì¡°ê±´ì„ ì§€ì •í•˜ì‹œì˜¤.
+-- 5. CUSTOMER_TBL Å×ÀÌºí¿¡ GRADE Ä®·³À» Ãß°¡ÇÏ½Ã¿À. 
+--    GRADE Ä®·³Àº 'VIP', 'GOLD', 'SILVER', 'BRONZE' Áß ÇÏ³ªÀÇ °ª¸¸ °¡Áú ¼ö ÀÖµµ·Ï CHECK Á¦¾àÁ¶°ÇÀ» ÁöÁ¤ÇÏ½Ã¿À.
 ALTER TABLE CUSTOMER_TBL
     ADD GRADE VARCHAR2(6 BYTE) CHECK(GRADE IN('VIP', 'GOLD', 'SILVER', 'BRONZE'));
 
 
--- 6. BANK_TBL í…Œì´ë¸”ì˜ BANK_NAME ì¹¼ëŸ¼ì„ NOT NULL ì œì•½ì¡°ê±´ì„ ì¶”ê°€í•˜ì‹œì˜¤.
+-- 6. BANK_TBL Å×ÀÌºíÀÇ BANK_NAME Ä®·³À» NOT NULL Á¦¾àÁ¶°ÇÀ» Ãß°¡ÇÏ½Ã¿À.
 ALTER TABLE BANK_TBL
     MODIFY BANK_NAME VARCHAR2(15 BYTE) NOT NULL;
 
--- 7. CUSTOMER_TBL í…Œì´ë¸”ì˜ NO ì¹¼ëŸ¼ì˜ ì´ë¦„ì„ CUST_NOë¡œ ë³€ê²½í•˜ì‹œì˜¤.
+-- 7. CUSTOMER_TBL Å×ÀÌºíÀÇ NO Ä®·³ÀÇ ÀÌ¸§À» CUST_NO·Î º¯°æÇÏ½Ã¿À.
 ALTER TABLE CUSTOMER_TBL
     RENAME COLUMN NO TO CUST_NO;
 
--- 8. CUSTOMER_TBL í…Œì´ë¸”ì˜ PHONE ì¹¼ëŸ¼ì„ ì‚­ì œí•˜ì‹œì˜¤.
+-- 8. CUSTOMER_TBL Å×ÀÌºíÀÇ PHONE Ä®·³À» »èÁ¦ÇÏ½Ã¿À.
 ALTER TABLE CUSTOMER_TBL
     DROP COLUMN PHONE;
 
--- 9. CUSTOMER_TBL í…Œì´ë¸”ì˜ CUST_NAME ì¹¼ëŸ¼ì˜ NOT NULL ì œì•½ì¡°ê±´ì„ NULL ì œì•½ì¡°ê±´ìœ¼ë¡œ ë³€ê²½í•˜ì‹œì˜¤.
+-- 9. CUSTOMER_TBL Å×ÀÌºíÀÇ CUST_NAME Ä®·³ÀÇ NOT NULL Á¦¾àÁ¶°ÇÀ» NULL Á¦¾àÁ¶°ÇÀ¸·Î º¯°æÇÏ½Ã¿À.
 ALTER TABLE CUSTOMER_TBL
-    MODIFY CUST_NAME VARCHAR2(30 BYTE) NULL; -- ìƒì„±í•  ë• NULL ëª…ì‹œ ì•ˆ í•´ì¤˜ë„ ë˜ì§€ë§Œ ìˆ˜ì •í•  ë• NULL í‘œì‹œ í•´ì¤˜ì•¼ ë¨ ëª…ì‹œ ì•ˆ í•´ì¤„ ì‹œ ì „ì— ì œì•½ì¡°ê±´ ê·¸ëŒ€ë¡œ ì‚¬ìš©
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    MODIFY CUST_NAME VARCHAR2(30 BYTE) NULL; -- »ý¼ºÇÒ ¶© NULL ¸í½Ã ¾È ÇØÁàµµ µÇÁö¸¸ ¼öÁ¤ÇÒ ¶© NULL Ç¥½Ã ÇØÁà¾ß µÊ ¸í½Ã ¾È ÇØÁÙ ½Ã Àü¿¡ Á¦¾àÁ¶°Ç ±×´ë·Î »ç¿ë

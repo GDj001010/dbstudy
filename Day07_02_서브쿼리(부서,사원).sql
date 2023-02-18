@@ -1,222 +1,222 @@
 /*
-    ì„œë¸Œì¿¼ë¦¬(Sub Query)
-    1. ë©”ì¸ì¿¼ë¦¬ì— í¬í•¨í•˜ëŠ” í•˜ìœ„ì¿¼ë¦¬ë¥¼ ì˜ë¯¸í•œë‹¤.
-    2. ì¼ë°˜ì ìœ¼ë¡œ í•˜ìœ„ì¿¼ë¦¬ëŠ” ê´„í˜¸()ë¡œ ë¬¶ì–´ì„œ ë©”ì¸ì¿¼ë¦¬ì— í¬í•¨í•œë‹¤.
-    3. í•˜ìœ„ì¿¼ë¦¬ê°€ í•­ìƒ ë©”ì¸ì¿¼ë¦¬ë³´ë‹¤ ë¨¼ì € ì‹¤í–‰ëœë‹¤.
+    ¼­ºêÄõ¸®(Sub Query)
+    1. ¸ÞÀÎÄõ¸®¿¡ Æ÷ÇÔÇÏ´Â ÇÏÀ§Äõ¸®¸¦ ÀÇ¹ÌÇÑ´Ù.
+    2. ÀÏ¹ÝÀûÀ¸·Î ÇÏÀ§Äõ¸®´Â °ýÈ£()·Î ¹­¾î¼­ ¸ÞÀÎÄõ¸®¿¡ Æ÷ÇÔÇÑ´Ù.
+    3. ÇÏÀ§Äõ¸®°¡ Ç×»ó ¸ÞÀÎÄõ¸®º¸´Ù ¸ÕÀú ½ÇÇàµÈ´Ù.
 */
 /*
-    ì„œë¸Œì¿¼ë¦¬ê°€ í¬í•¨ë˜ëŠ” ìœ„ì¹˜
-    1. SELECTì ˆ   : ìŠ¤ì¹¼ë¼ ì„œë¸Œì¿¼ë¦¬
-    2. FROMì ˆ     : ì¸ë¼ì¸ ë·°
-    3. WHEREì ˆ    : ì„œë¸Œì¿¼ë¦¬
+    ¼­ºêÄõ¸®°¡ Æ÷ÇÔµÇ´Â À§Ä¡
+    1. SELECTÀý   : ½ºÄ®¶ó ¼­ºêÄõ¸®
+    2. FROMÀý     : ÀÎ¶óÀÎ ºä
+    3. WHEREÀý    : ¼­ºêÄõ¸®
 */
 
 /*
-    ì„œë¸Œì¿¼ë¦¬ì˜ ì‹¤í–‰ ê²°ê³¼ì— ì˜í•œ êµ¬ë¶„
-    1. ë‹¨ì¼ í–‰(SINGLEROW) ì„œë¸Œì¿¼ë¦¬
-        1) ê²°ê³¼ í–‰ì´ 1ê°œì´ë‹¤.
-        2) ë‹¨ì¼ í–‰ ì„œë¸Œì¿¼ë¦¬ì¸ ëŒ€í‘œì ì¸ ê²½ìš°
-            (1) WHEREì ˆì—ì„œ ì‚¬ìš©í•œ ë™ë“±ë¹„êµ(=) ì¹¼ëŸ¼ì´ PK ë˜ëŠ” UNIQUE ì¹¼ëŸ¼ì¸ ê²½ìš°
-            (2) ì§‘ê³„í•¨ìˆ˜ì²˜ëŸ¼ ê²°ê³¼ê°€ 1ê°œê°’ì„ ë°˜í™˜í•˜ëŠ” ê²½ìš°
-        3) ë‹¨ì¼ í–‰ ì„œë¸Œì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•˜ëŠ” ì—°ì‚°ìž(ë‹¨ì¼ í–‰ ì—°ì‚°ìž)
-            (1) ë‹¨ìž‰ í–‰ ì—°ì‚°ìžë¥¼ ì‚¬ìš©(=, !=, >, >=, <, <=)
-    2. ë‹¤ì¤‘ í–‰ ì„œë¸Œì¿¼ë¦¬
-        1) ê²°ê³¼ í–‰ì´ 1ê°œ ì´ìƒì´ë‹¤.
-        2) FROMì ˆ, WHEREì ˆì—ì„œ ë§Žì´ ì‚¬ìš©ëœë‹¤.
-        3) ë‹¤ì¤‘ í–‰ ì„œë¸Œì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•˜ëŠ” ì—°ì‚°ìž
-            (1)ë‹¤ì¤‘ í–‰ ì—°ì‚°ìžë¥¼ ì‚¬ìš©(IN(ë§Žì´ ì‚¬ìš©í•¨), ANY, ALL ë“±)
+    ¼­ºêÄõ¸®ÀÇ ½ÇÇà °á°ú¿¡ ÀÇÇÑ ±¸ºÐ
+    1. ´ÜÀÏ Çà(SINGLEROW) ¼­ºêÄõ¸®
+        1) °á°ú ÇàÀÌ 1°³ÀÌ´Ù.
+        2) ´ÜÀÏ Çà ¼­ºêÄõ¸®ÀÎ ´ëÇ¥ÀûÀÎ °æ¿ì
+            (1) WHEREÀý¿¡¼­ »ç¿ëÇÑ µ¿µîºñ±³(=) Ä®·³ÀÌ PK ¶Ç´Â UNIQUE Ä®·³ÀÎ °æ¿ì
+            (2) Áý°èÇÔ¼öÃ³·³ °á°ú°¡ 1°³°ªÀ» ¹ÝÈ¯ÇÏ´Â °æ¿ì
+        3) ´ÜÀÏ Çà ¼­ºêÄõ¸®¿¡¼­ »ç¿ëÇÏ´Â ¿¬»êÀÚ(´ÜÀÏ Çà ¿¬»êÀÚ)
+            (1) ´ÜÀ× Çà ¿¬»êÀÚ¸¦ »ç¿ë(=, !=, >, >=, <, <=)
+    2. ´ÙÁß Çà ¼­ºêÄõ¸®
+        1) °á°ú ÇàÀÌ 1°³ ÀÌ»óÀÌ´Ù.
+        2) FROMÀý, WHEREÀý¿¡¼­ ¸¹ÀÌ »ç¿ëµÈ´Ù.
+        3) ´ÙÁß Çà ¼­ºêÄõ¸®¿¡¼­ »ç¿ëÇÏ´Â ¿¬»êÀÚ
+            (1)´ÙÁß Çà ¿¬»êÀÚ¸¦ »ç¿ë(IN(¸¹ÀÌ »ç¿ëÇÔ), ANY, ALL µî)
 */
 
--- WHEREì ˆì˜ ì„œë¸Œì¿¼ë¦¬   (ì„œë¸Œì¿¼ë¦¬
+-- WHEREÀýÀÇ ¼­ºêÄõ¸®   (¼­ºêÄõ¸®
 
--- 1. ì‚¬ì›ë²ˆí˜¸ê°€ 1001ì¸ ì‚¬ì›ê³¼ ë™ì¼í•œ ì§ê¸‰(POSITION)ì„ ê°€ì§„ ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤. 
-SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY       -- ì‚¬ì›ì •ë³´
-  FROM EMPLOYEE_TBL-- ì‚¬ì›í…Œì´ë¸”
+-- 1. »ç¿ø¹øÈ£°¡ 1001ÀÎ »ç¿ø°ú µ¿ÀÏÇÑ Á÷±Þ(POSITION)À» °¡Áø »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À. 
+SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY       -- »ç¿øÁ¤º¸
+  FROM EMPLOYEE_TBL-- »ç¿øÅ×ÀÌºí
  WHERE POSITION = (SELECT POSITION
                      FROM EMPLOYEE_TBL
-                    WHERE EMP_NO = 1001);       -- ì§ê¸‰ = (ì‚¬ì›ë²ˆí˜¸ê°€ 1001ì¸ ì‚¬ì›ì˜ ì§ê¸‰); ì„œë¸Œì¿¼ë¦¬  í•­ìƒ ì„œë¸Œì¿¼ë¦¬ ë¨¼ì € ì‹¤í–‰ í›„ ë©”ì¸ì¿¼ë¦¬ê°€ ì§„í–‰ ëœë‹¤.
-                                                -- ë‹¨ì¼ í–‰ì´ë‹¤ (WHEREì ˆì—ì„œ PKì™€ ë™ë“±ë¹„êµë¥¼ í•˜ì—¬ ê²°ê³¼ í–‰ì´ 1ê°œë§Œ ë‚˜ì˜´, ë‹¨ì¼ í–‰ ì—°ì‚°ìžì¸ '=' ì‚¬ìš©í•¨)
+                    WHERE EMP_NO = 1001);       -- Á÷±Þ = (»ç¿ø¹øÈ£°¡ 1001ÀÎ »ç¿øÀÇ Á÷±Þ); ¼­ºêÄõ¸®  Ç×»ó ¼­ºêÄõ¸® ¸ÕÀú ½ÇÇà ÈÄ ¸ÞÀÎÄõ¸®°¡ ÁøÇà µÈ´Ù.
+                                                -- ´ÜÀÏ ÇàÀÌ´Ù (WHEREÀý¿¡¼­ PK¿Í µ¿µîºñ±³¸¦ ÇÏ¿© °á°ú ÇàÀÌ 1°³¸¸ ³ª¿È, ´ÜÀÏ Çà ¿¬»êÀÚÀÎ '=' »ç¿ëÇÔ)
 
--- 2. ë¶€ì„œë²ˆí˜¸ê°€ 2ì¸ ë¶€ì„œì™€ ë™ì¼í•œ ì§€ì—­ì— ìžˆëŠ” ë¶€ì„œë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
-SELECT DEPT_NO, DEPT_NAME, LOCATION             -- ë¶€ì„œì •ë³´
-  FROM DEPARTMENT_TBL                           -- ë¶€ì„œ
+-- 2. ºÎ¼­¹øÈ£°¡ 2ÀÎ ºÎ¼­¿Í µ¿ÀÏÇÑ Áö¿ª¿¡ ÀÖ´Â ºÎ¼­¸¦ Á¶È¸ÇÏ½Ã¿À.
+SELECT DEPT_NO, DEPT_NAME, LOCATION             -- ºÎ¼­Á¤º¸
+  FROM DEPARTMENT_TBL                           -- ºÎ¼­
  WHERE LOCATION = (SELECT LOCATION
                      FROM DEPARTMENT_TBL
-                    WHERE DEPT_NO = 2);         -- ì§€ì—­ = (ë¶€ì„œë²ˆí˜¸ê°€ 2ì¸ ë¶€ì„œì˜ ì§€ì—­)
+                    WHERE DEPT_NO = 2);         -- Áö¿ª = (ºÎ¼­¹øÈ£°¡ 2ÀÎ ºÎ¼­ÀÇ Áö¿ª)
   
--- 3. ê°€ìž¥ ë†’ì€ ê¸‰ì—¬ë¥¼ ë°›ëŠ” ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤.
-SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY  -- ì‚¬ì›ì •ë³´
-  FROM EMPLOYEE_TBL                                               -- ì‚¬ì›
+-- 3. °¡Àå ³ôÀº ±Þ¿©¸¦ ¹Þ´Â »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À.
+SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY  -- »ç¿øÁ¤º¸
+  FROM EMPLOYEE_TBL                                               -- »ç¿ø
  WHERE SALARY = (SELECT MAX(SALARY)
-                   FROM EMPLOYEE_TBL);                            -- ê¸‰ì—¬ = (ê°€ìž¥ ë†’ì€ ê¸‰ì—¬)
+                   FROM EMPLOYEE_TBL);                            -- ±Þ¿© = (°¡Àå ³ôÀº ±Þ¿©)
 
--- 4. í‰ê·  ê¸‰ì—¬ ì´ìƒì„ ë°›ëŠ” ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 4. Æò±Õ ±Þ¿© ÀÌ»óÀ» ¹Þ´Â »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À.
 SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
   FROM EMPLOYEE_TBL
  WHERE SALARY > (SELECT AVG(SALARY)
                    FROM EMPLOYEE_TBL);
 
 
--- 5. í‰ê·  ê·¼ì† ê°œì›” ìˆ˜ ì´ìƒì„ ê·¼ë¬´í•œ ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 5. Æò±Õ ±Ù¼Ó °³¿ù ¼ö ÀÌ»óÀ» ±Ù¹«ÇÑ »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À.
 SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
   FROM EMPLOYEE_TBL
  WHERE MONTHS_BETWEEN(SYSDATE, HIRE_DATE) > (SELECT AVG(MONTHS_BETWEEN(SYSDATE, HIRE_DATE))
                                                FROM EMPLOYEE_TBL);
                                                
--- 6. ë¶€ì„œë²ˆí˜¸ê°€ 2ì¸ ë¶€ì„œì— ê·¼ë¬´í•˜ëŠ” ì‚¬ì›ë“¤ì˜ ì§ê¸‰ê³¼ ì¼ì¹˜í•˜ëŠ” ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 6. ºÎ¼­¹øÈ£°¡ 2ÀÎ ºÎ¼­¿¡ ±Ù¹«ÇÏ´Â »ç¿øµéÀÇ Á÷±Þ°ú ÀÏÄ¡ÇÏ´Â »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À.
 SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY           
   FROM EMPLOYEE_TBL                                                        
  WHERE POSITION IN (SELECT POSITION
                       FROM EMPLOYEE_TBL
-                     WHERE DEPART = 2);   -- ì„œë¸Œì¿¼ë¦¬ì˜ WHEREì ˆì—ì„œ ì‚¬ìš©í•œ ì¹¼ëŸ¼ì´ PKë‚˜ UNIQUE ì¹¼ëŸ¼ì´ ì•„ë‹ˆë¯€ë¡œ ë‹¤ì¤‘ í–‰ ì„œë¸Œì¿¼ë¦¬ì´ë‹¤.                 
-                                          -- ë”°ë¼ì„œ ë‹¨ì¼ í–‰ ì—°ì‚°ìžì¸ ë“±í˜¸(=) ëŒ€ì‹  ë‹¤ì¤‘ í–‰ ì—°ì‚°ìž(IN)ì„ ì‚¬ìš©í•´ì•¼ í•œë‹¤.
+                     WHERE DEPART = 2);   -- ¼­ºêÄõ¸®ÀÇ WHEREÀý¿¡¼­ »ç¿ëÇÑ Ä®·³ÀÌ PK³ª UNIQUE Ä®·³ÀÌ ¾Æ´Ï¹Ç·Î ´ÙÁß Çà ¼­ºêÄõ¸®ÀÌ´Ù.                 
+                                          -- µû¶ó¼­ ´ÜÀÏ Çà ¿¬»êÀÚÀÎ µîÈ£(=) ´ë½Å ´ÙÁß Çà ¿¬»êÀÚ(IN)À» »ç¿ëÇØ¾ß ÇÑ´Ù.
                                          
--- 7. ë¶€ì„œëª…ì´ 'ì˜ì—…ë¶€'ì¸ ë¶€ì„œì— ê·¼ë¬´í•˜ëŠ” ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤.
--- ì„œë¸Œì¿¼ë¦¬
-SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY  -- ë‚´ê°€ í•œ ê±° í‹€ë¦° ë‹µì•ˆ
+-- 7. ºÎ¼­¸íÀÌ '¿µ¾÷ºÎ'ÀÎ ºÎ¼­¿¡ ±Ù¹«ÇÏ´Â »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À.
+-- ¼­ºêÄõ¸®
+SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY  -- ³»°¡ ÇÑ °Å Æ²¸° ´ä¾È
   FROM EMPLOYEE_TBL
  WHERE DEPART = (SELECT DEPT_NO
                    FROM DEPARTMENT_TBL
-                  WHERE DEPT_NO = 1);  -- ì„œë¸Œì¿¼ë¦¬ì—ì„œ WHEREì ˆì—ì„œ ì‚¬ìš©í•œ DEPT_NO ì¹¼ëŸ¼ì€ PK/UNIQUEê°€ ì•„ë‹ˆë¯€ë¡œ ë‹¤ì¤‘ í–‰ ì„œë¸Œì¿¼ë¦¬ì´ë‹¤.
+                  WHERE DEPT_NO = 1);  -- ¼­ºêÄõ¸®¿¡¼­ WHEREÀý¿¡¼­ »ç¿ëÇÑ DEPT_NO Ä®·³Àº PK/UNIQUE°¡ ¾Æ´Ï¹Ç·Î ´ÙÁß Çà ¼­ºêÄõ¸®ÀÌ´Ù.
 
 SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY  
   FROM EMPLOYEE_TBL
- WHERE DEPART IN (SELECT DEPT_NO                            -- ë‹¤ì¤‘ í–‰ì´ë¯€ë¡œ ë‹¨ì¼ í–‰ ì—°ì‚°ìž(=) ëŒ€ì‹  ë‹¤ì¤‘ í–‰ ì—°ì‚°ìž(IN)ì„ ì‚¬ìš©í•´ì•¼í•œë‹¤.
+ WHERE DEPART IN (SELECT DEPT_NO                            -- ´ÙÁß ÇàÀÌ¹Ç·Î ´ÜÀÏ Çà ¿¬»êÀÚ(=) ´ë½Å ´ÙÁß Çà ¿¬»êÀÚ(IN)À» »ç¿ëÇØ¾ßÇÑ´Ù.
                    FROM DEPARTMENT_TBL
-                  WHERE DEPT_NAME = 'ì˜ì—…ë¶€'); 
--- ì¡°ì¸
+                  WHERE DEPT_NAME = '¿µ¾÷ºÎ'); 
+-- Á¶ÀÎ
 SELECT E.EMP_NO, E.NAME, E.DEPART, E.POSITION, E.GENDER, E.HIRE_DATE, E.SALARY
   FROM DEPARTMENT_TBL D INNER JOIN EMPLOYEE_TBL E
     ON D.DEPT_NO = E.DEPART
- WHERE DEPT_NAME = 'ì˜ì—…ë¶€';
+ WHERE DEPT_NAME = '¿µ¾÷ºÎ';
                             
         
--- 8. ì§ê¸‰ì´ 'ê³¼ìž¥'ì¸ ì‚¬ì›ë“¤ì´ ê·¼ë¬´í•˜ëŠ” ë¶€ì„œ ì •ë³´ë¥¼ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 8. Á÷±ÞÀÌ '°úÀå'ÀÎ »ç¿øµéÀÌ ±Ù¹«ÇÏ´Â ºÎ¼­ Á¤º¸¸¦ Á¶È¸ÇÏ½Ã¿À.
 
--- ì„œë¸Œì¿¼ë¦¬
+-- ¼­ºêÄõ¸®
 SELECT DEPT_NO, DEPT_NAME, LOCATION
   FROM DEPARTMENT_TBL
  WHERE DEPT_NO IN (SELECT DEPART
                     FROM EMPLOYEE_TBL
-                   WHERE POSITION = 'ê³¼ìž¥');
+                   WHERE POSITION = '°úÀå');
 
--- ì¡°ì¸
+-- Á¶ÀÎ
 SELECT D.DEPT_NO, D.DEPT_NAME, D.LOCATION
   FROM DEPARTMENT_TBL D INNER JOIN EMPLOYEE_TBL E
     ON D.DEPT_NO = E.DEPART
- WHERE POSITION = 'ê³¼ìž¥';
+ WHERE POSITION = '°úÀå';
 
 
--- 9. 'ì˜ì—…ë¶€'ì—ì„œ ê°€ìž¥ ë†’ì€ ê¸‰ì—¬ë³´ë‹¤ ë” ë†’ì€ ê¸‰ì—¬ë¥¼ ë°›ëŠ” ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤.
--- ì„œë¸Œì¿¼ë¦¬
+-- 9. '¿µ¾÷ºÎ'¿¡¼­ °¡Àå ³ôÀº ±Þ¿©º¸´Ù ´õ ³ôÀº ±Þ¿©¸¦ ¹Þ´Â »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À.
+-- ¼­ºêÄõ¸®
 SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY  
   FROM EMPLOYEE_TBL
  WHERE SALARY > (SELECT MAX(SALARY)
                    FROM EMPLOYEE_TBL
                   WHERE DEPART IN (SELECT DEPT_NO
                                     FROM DEPARTMENT_TBL
-                                   WHERE DEPT_NAME = 'ì˜ì—…ë¶€'));
+                                   WHERE DEPT_NAME = '¿µ¾÷ºÎ'));
 
 
--- ì°¸ê³ . ì„œë¸Œì¿¼ë¦¬ë¥¼ ì¡°ì¸ìœ¼ë¡œ í’€ê¸°
+-- Âü°í. ¼­ºêÄõ¸®¸¦ Á¶ÀÎÀ¸·Î Ç®±â
 SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY  
   FROM EMPLOYEE_TBL
  WHERE SALARY > (SELECT MAX(E.SALARY)
                    FROM DEPARTMENT_TBL D INNER JOIN EMPLOYEE_TBL E
                      ON D.DEPT_NO = E.DEPART
-                  WHERE D.DEPT_NAME = 'ì˜ì—…ë¶€');
+                  WHERE D.DEPT_NAME = '¿µ¾÷ºÎ');
 
 
 /*
-    ì¸ë¼ì¸ ë·°(InLine View) View - í…Œì´ë¸”ì´ë¼ ë¶€ë¥¼ ìˆ˜ ìžˆë‹¤. 
-    1. ì¿¼ë¦¬ë¬¸ì— í¬í•¨ëœ ë·°(ê°€ìƒ í…Œì´ë¸”)ì´ë‹¤.
-    2. FROMì ˆì— í¬í•¨ë˜ëŠ” ì„œë¸Œì¿¼ë¦¬ë¥¼ ì˜ë¯¸í•œë‹¤.
-    3. ë‹¨ì¼ í–‰/ë‹¤ì¤‘ í–‰ ê°œë…ì´ í•„ìš” ì—†ë‹¤.
-    4. ì¸ë¼ì¸ ë·°ì— í¬í•¨ëœ ì¹¼ëŸ¼ë§Œ ë©”ì¸ì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•  ìˆ˜ ìžˆë‹¤.
-    5. ì¸ë¼ì¸ ë·°ë¥¼ ì´ìš©í•´ì„œ SELECTë¬¸ì˜ ì‹¤í–‰ ìˆœì„œë¥¼ ì¡°ì •í•  ìˆ˜ ìžˆë‹¤.
+    ÀÎ¶óÀÎ ºä(InLine View) View - Å×ÀÌºíÀÌ¶ó ºÎ¸¦ ¼ö ÀÖ´Ù. 
+    1. Äõ¸®¹®¿¡ Æ÷ÇÔµÈ ºä(°¡»ó Å×ÀÌºí)ÀÌ´Ù.
+    2. FROMÀý¿¡ Æ÷ÇÔµÇ´Â ¼­ºêÄõ¸®¸¦ ÀÇ¹ÌÇÑ´Ù.
+    3. ´ÜÀÏ Çà/´ÙÁß Çà °³³äÀÌ ÇÊ¿ä ¾ø´Ù.
+    4. ÀÎ¶óÀÎ ºä¿¡ Æ÷ÇÔµÈ Ä®·³¸¸ ¸ÞÀÎÄõ¸®¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖ´Ù.
+    5. ÀÎ¶óÀÎ ºä¸¦ ÀÌ¿ëÇØ¼­ SELECT¹®ÀÇ ½ÇÇà ¼ø¼­¸¦ Á¶Á¤ÇÒ ¼ö ÀÖ´Ù.
 */
 
 /*
-    ê°€ìƒ ì¹¼ëŸ¼
-    1. PSEUDO COLUMN (PëŠ” ë¬µìŒ)
-    2. ì¡´ìž¬í•˜ì§€ë§Œ ì €ìž¥ë˜ì–´ ìžˆì§€ ì•Šì€ ì¹¼ëŸ¼ì„ ì˜ë¯¸í•œë‹¤.
-    3. ì‚¬ìš©í•  ìˆ˜ ìžˆì§€ë§Œ ì¼ë¶€ ì‚¬ìš©ì— ì œì•½ì´ ìžˆë‹¤.
-    4. ì¢…ë¥˜
-        1) ROWID    : í–‰(ROW)ì˜ ID = ì–´ë–¤ í–‰ì´ ì–´ë””ì— ì €ìž¥ë˜ì–´ ìžˆëŠ”ì§€ ì•Œê³  ìžˆëŠ” ì¹¼ëŸ¼(ë¬¼ë¦¬ì  ì €ìž¥ ìœ„ì¹˜)
-        2) ROWNUM   : í–‰(ROW) ë²ˆí˜¸ = ì–´ë–¤ í–‰ì˜ ìˆœë²ˆ
+    °¡»ó Ä®·³
+    1. PSEUDO COLUMN (P´Â ¹¬À½)
+    2. Á¸ÀçÇÏÁö¸¸ ÀúÀåµÇ¾î ÀÖÁö ¾ÊÀº Ä®·³À» ÀÇ¹ÌÇÑ´Ù.
+    3. »ç¿ëÇÒ ¼ö ÀÖÁö¸¸ ÀÏºÎ »ç¿ë¿¡ Á¦¾àÀÌ ÀÖ´Ù.
+    4. Á¾·ù
+        1) ROWID    : Çà(ROW)ÀÇ ID = ¾î¶² ÇàÀÌ ¾îµð¿¡ ÀúÀåµÇ¾î ÀÖ´ÂÁö ¾Ë°í ÀÖ´Â Ä®·³(¹°¸®Àû ÀúÀå À§Ä¡)
+        2) ROWNUM   : Çà(ROW) ¹øÈ£ = ¾î¶² ÇàÀÇ ¼ø¹ø
 */
 -- ROWID
 SELECT ROWID, EMP_NO, NAME
   FROM EMPLOYEE_TBL;
 
--- ì˜¤ë¼í´ì˜ ê°€ìž¥ ë¹ ë¥¸ ê²€ìƒ‰ì€ ROWIDë¥¼ ì´ìš©í•œ ê²€ìƒ‰ì´ë‹¤.  - ë³´ë„ˆìŠ¤
--- ì‹¤ë¬´ì—ì„  ì‚¬ìš©ì´ ë¶ˆê°€ëŠ¥í•˜ê¸° ë•Œë¬¸ì— ëŒ€ì‹  ì¸ë±ìŠ¤(INDEX)ë¥¼ í™œìš©í•œë‹¤.
+-- ¿À¶óÅ¬ÀÇ °¡Àå ºü¸¥ °Ë»öÀº ROWID¸¦ ÀÌ¿ëÇÑ °Ë»öÀÌ´Ù.  - º¸³Ê½º
+-- ½Ç¹«¿¡¼± »ç¿ëÀÌ ºÒ°¡´ÉÇÏ±â ¶§¹®¿¡ ´ë½Å ÀÎµ¦½º(INDEX)¸¦ È°¿ëÇÑ´Ù.
 SELECT EMP_NO, NAME
   FROM EMPLOYEE_TBL
  WHERE ROWID = 'AAAE/qAABAAALC5AAA';
  
  /*
-    ROWNUMì˜ ì œì•½ ì‚¬í•­
-    1. ROWNUMì´ 1ì„ í¬í•¨í•˜ëŠ” ë²”ìœ„ë¥¼ ì¡°ê±´ìœ¼ë¡œ ì‚¬ìš©í•  ìˆ˜ ìžˆë‹¤.
-    2. ROWNUMì´ 1ì„ í¬í•¨í•˜ì§€ ì•ŠëŠ” ë²”ìœ„ëŠ” ì¡°ê±´ìœ¼ë¡œ ì‚¬ìš©í•  ìˆ˜ ì—†ë‹¤.
-    3. ëª¨ë“  ROWNUMì„ ì‚¬ìš©í•˜ë ¤ë©´ ROWNUMì— ë³„ëª…ì„ ì§€ì •í•˜ê³  ê·¸ ë³„ëª…ì„ ì‚¬ìš©í•˜ë©´ ëœë‹¤.
+    ROWNUMÀÇ Á¦¾à »çÇ×
+    1. ROWNUMÀÌ 1À» Æ÷ÇÔÇÏ´Â ¹üÀ§¸¦ Á¶°ÇÀ¸·Î »ç¿ëÇÒ ¼ö ÀÖ´Ù.
+    2. ROWNUMÀÌ 1À» Æ÷ÇÔÇÏÁö ¾Ê´Â ¹üÀ§´Â Á¶°ÇÀ¸·Î »ç¿ëÇÒ ¼ö ¾ø´Ù.
+    3. ¸ðµç ROWNUMÀ» »ç¿ëÇÏ·Á¸é ROWNUM¿¡ º°¸íÀ» ÁöÁ¤ÇÏ°í ±× º°¸íÀ» »ç¿ëÇÏ¸é µÈ´Ù.
 */
 
 
 SELECT E.EMP_NO, E.NAME, E.DEPART
   FROM (SELECT EMP_NO, NAME, DEPART
           FROM EMPLOYEE_TBL
-         ORDER BY EMP_NO) E;    -- ì„œë¸Œì¿¼ë¦¬ ê²°ê³¼ê°€ í…Œì´ë¸”ë¡œ ì¸ì‹ëœë‹¤ = InLine Vuew(ê°€ìƒ í…Œì´ë¸”)
-                                  -- í…Œì´ë¸”ê³¼ ê°™ì´ ë³„ëª…ì„ ì¤„ ìˆ˜ ìžˆìŒ ì„œë¸Œì¿¼ë¦¬ì˜ ë³„ëª…ì´ Eê°€ ë¨ FROMì ˆ ì„œë¸Œì¿¼ë¦¬ëŠ” "ë³„ëª…" ì£¼ê¸°
-                                  -- ì„œë¸Œì¿¼ë¦¬ì˜ ì‹¤í–‰ì´ ë¨¼ì € ë˜ë¯€ë¡œ ORDER BY(ì •ë ¬)ëœ ë‹¤ìŒ ì •ë ¬ëœ ì¹¼ëŸ¼ë“¤ì„ ë³¸ë‹¤.
+         ORDER BY EMP_NO) E;    -- ¼­ºêÄõ¸® °á°ú°¡ Å×ÀÌºí·Î ÀÎ½ÄµÈ´Ù = InLine Vuew(°¡»ó Å×ÀÌºí)
+                                  -- Å×ÀÌºí°ú °°ÀÌ º°¸íÀ» ÁÙ ¼ö ÀÖÀ½ ¼­ºêÄõ¸®ÀÇ º°¸íÀÌ E°¡ µÊ FROMÀý ¼­ºêÄõ¸®´Â "º°¸í" ÁÖ±â
+                                  -- ¼­ºêÄõ¸®ÀÇ ½ÇÇàÀÌ ¸ÕÀú µÇ¹Ç·Î ORDER BY(Á¤·Ä)µÈ ´ÙÀ½ Á¤·ÄµÈ Ä®·³µéÀ» º»´Ù.
                                   
 SELECT EMP_NO, NAME
   FROM EMPLOYEE_TBL
- WHERE ROWNUM = 1;  -- ROWNUMì´ 1ì„ í¬í•¨í•œ ë²”ìœ„ê°€ ì‚¬ìš©ë˜ë¯€ë¡œ ê°€ëŠ¥
+ WHERE ROWNUM = 1;  -- ROWNUMÀÌ 1À» Æ÷ÇÔÇÑ ¹üÀ§°¡ »ç¿ëµÇ¹Ç·Î °¡´É
  
 SELECT EMP_NO, NAME
   FROM EMPLOYEE_TBL
- WHERE ROWNUM <= 2;  -- ROWNUMì´ 1ì„ í¬í•¨í•œ ë²”ìœ„ê°€ ì‚¬ìš©ë˜ë¯€ë¡œ ê°€ëŠ¥
+ WHERE ROWNUM <= 2;  -- ROWNUMÀÌ 1À» Æ÷ÇÔÇÑ ¹üÀ§°¡ »ç¿ëµÇ¹Ç·Î °¡´É
 
 SELECT EMP_NO, NAME
   FROM EMPLOYEE_TBL
- WHERE ROWNUM = 2;  -- ROWNUMì´ 1ì„ í¬í•¨í•œ ë²”ìœ„ê°€ ì•„ë‹ˆë¯€ë¡œ ë¶ˆê°€ëŠ¥
+ WHERE ROWNUM = 2;  -- ROWNUMÀÌ 1À» Æ÷ÇÔÇÑ ¹üÀ§°¡ ¾Æ´Ï¹Ç·Î ºÒ°¡´É
 
 
 SELECT ROWNUM AS RN, EMP_NO, NAME
-  FROM EMPLOYEE_TBL  -- ì‹¤í–‰ ìˆœì„œê°€ ë§žì§€ ì•Šê¸° ë•Œë¬¸ì— ì‹¤í–‰ì´ ë¶ˆê°€ëŠ¥í•˜ë‹¤. (ë³„ëª…ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ë‹¤.)
- WHERE RN = 2;       -- ë³„ëª… ì§€ì •ì„ WHEREì ˆë³´ë‹¤ ë¨¼ì € ì²˜ë¦¬í•˜ë©´ í•´ê²°ëœë‹¤.
-                     -- ë³„ëª…ì„ ì§€ì •í•˜ëŠ” ì¸ë¼ì¸ ë·°ë¥¼ ì‚¬ìš©í•˜ë©´ ê°€ìž¥ ë¨¼ì € ë³„ëª…ì´ ì§€ì •ë˜ë¯€ë¡œ í•´ê²°ëœë‹¤.
+  FROM EMPLOYEE_TBL  -- ½ÇÇà ¼ø¼­°¡ ¸ÂÁö ¾Ê±â ¶§¹®¿¡ ½ÇÇàÀÌ ºÒ°¡´ÉÇÏ´Ù. (º°¸íÀ» »ç¿ëÇÒ ¼ö ¾ø´Ù.)
+ WHERE RN = 2;       -- º°¸í ÁöÁ¤À» WHEREÀýº¸´Ù ¸ÕÀú Ã³¸®ÇÏ¸é ÇØ°áµÈ´Ù.
+                     -- º°¸íÀ» ÁöÁ¤ÇÏ´Â ÀÎ¶óÀÎ ºä¸¦ »ç¿ëÇÏ¸é °¡Àå ¸ÕÀú º°¸íÀÌ ÁöÁ¤µÇ¹Ç·Î ÇØ°áµÈ´Ù.
 
 SELECT E.EMP_NO, E.NAME
   FROM (SELECT ROWNUM AS RN, EMP_NO, NAME
           FROM EMPLOYEE_TBL) E
  WHERE E.RN = 2;
 
--- FROMì ˆì˜ ì„œë¸Œì¿¼ë¦¬  (ì¸ë¼ì¸ ë·°
+-- FROMÀýÀÇ ¼­ºêÄõ¸®  (ÀÎ¶óÀÎ ºä
 
--- 1. ì—°ë´‰ì´ 2ë²ˆì§¸ë¡œ ë†’ì€ ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤. ì •ë ¬-ë²ˆí˜¸-2í–‰ ê°€ì ¸ì˜¤ê¸°
---  1) ì—°ë´‰ìˆœìœ¼ë¡œ ì •ë ¬í•œë‹¤.
---  2) ì •ë ¬ ê²°ê³¼ì— í–‰ ë²ˆí˜¸(ROWNUM)ì„ ë¶™ì¸ë‹¤.
---  3) ì›í•˜ëŠ” í–‰ ë²ˆí˜¸ë¥¼ ì¡°íšŒí•œë‹¤.
+-- 1. ¿¬ºÀÀÌ 2¹øÂ°·Î ³ôÀº »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À. Á¤·Ä-¹øÈ£-2Çà °¡Á®¿À±â
+--  1) ¿¬ºÀ¼øÀ¸·Î Á¤·ÄÇÑ´Ù.
+--  2) Á¤·Ä °á°ú¿¡ Çà ¹øÈ£(ROWNUM)À» ºÙÀÎ´Ù.
+--  3) ¿øÇÏ´Â Çà ¹øÈ£¸¦ Á¶È¸ÇÑ´Ù.
 
---  1) ROWNUM ì¹¼ëŸ¼ ì‚¬ìš©í•˜ê¸°
+--  1) ROWNUM Ä®·³ »ç¿ëÇÏ±â
 SELECT E.EMP_NO, E.NAME, E.DEPART, E.POSITION, E.GENDER, E.HIRE_DATE, E.SALARY
   FROM (SELECT ROWNUM AS RN, A.EMP_NO, A.NAME, A.DEPART, A.POSITION, A.GENDER, A.HIRE_DATE, A.SALARY
           FROM (SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
                   FROM EMPLOYEE_TBL
-                 ORDER BY SALARY DESC) A) E     -- ì •ë ¬í•œ í…Œì´ë¸”ì€ A
- WHERE E.RN = 3;                                -- ì •ë ¬ ê²°ê³¼ì— í–‰ë²ˆí˜¸ë¥¼ ë¶™ì¸ í…Œì´ë¸”ì€ E
+                 ORDER BY SALARY DESC) A) E     -- Á¤·ÄÇÑ Å×ÀÌºíÀº A
+ WHERE E.RN = 3;                                -- Á¤·Ä °á°ú¿¡ Çà¹øÈ£¸¦ ºÙÀÎ Å×ÀÌºíÀº E
     
 
---  2) ROW_NUMBER() í•¨ìˆ˜ ì‚¬ìš©í•˜ê¸° -- ê³µë¶€í•˜ê¸°
+--  2) ROW_NUMBER() ÇÔ¼ö »ç¿ëÇÏ±â -- °øºÎÇÏ±â
 SELECT E.EMP_NO, E.NAME, E.DEPART, E.POSITION, E.GENDER, E.HIRE_DATE, E.SALARY
   FROM (SELECT ROW_NUMBER() OVER(ORDER BY SALARY DESC) AS RN, EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
           FROM EMPLOYEE_TBL) E    
  WHERE E.RN = 2;   
 
 
--- 2. 3 ~ 4ë²ˆì§¸ë¡œ ìž…ì‚¬í•œ ì‚¬ì›ì„ ì¡°íšŒí•˜ì‹œì˜¤.
+-- 2. 3 ~ 4¹øÂ°·Î ÀÔ»çÇÑ »ç¿øÀ» Á¶È¸ÇÏ½Ã¿À.
 SELECT E.EMP_NO, E.NAME, E.DEPART, E.POSITION, E.GENDER, E.HIRE_DATE, E.SALARY
   FROM (SELECT ROWNUM AS RN, A.EMP_NO, A.NAME, A.DEPART, A.POSITION, A.GENDER, A.HIRE_DATE, A.SALARY
           FROM (SELECT EMP_NO, NAME, DEPART, POSITION, GENDER, HIRE_DATE, SALARY
@@ -231,15 +231,15 @@ SELECT E.EMP_NO, E.NAME, E.DEPART, E.POSITION, E.GENDER, E.HIRE_DATE, E.SALARY
  WHERE E.RN BETWEEN 3 AND 4;
 
 
--- SELECTì ˆì˜ ì„œë¸Œì¿¼ë¦¬  (ìŠ¤ì¹¼ë¼ ì„œë¸Œì¿¼ë¦¬
+-- SELECTÀýÀÇ ¼­ºêÄõ¸®  (½ºÄ®¶ó ¼­ºêÄõ¸®
 /*
-    ìŠ¤ì¹¼ë¼ ì„œë¸Œì¿¼ë¦¬
-    1. SELECTì ˆì—ì„œ í•˜ë‚˜ì˜ ê°’ì„ ë°˜í™˜í•˜ëŠ” ì„œë¸Œì¿¼ë¦¬ì´ë‹¤.
-    2. ì¼ì¹˜í•˜ì§€ ì•ŠëŠ” ì •ë³´ëŠ” NULLê°’ì„ ë°˜í™˜í•œë‹¤.
-    3. ìœ ì‚¬í•œ ë°©ì‹ì˜ ì¡°ì¸ ë°©ì‹ì€ ì™¸ë¶€ì¡°ì¸ì´ë‹¤.
+    ½ºÄ®¶ó ¼­ºêÄõ¸®
+    1. SELECTÀý¿¡¼­ ÇÏ³ªÀÇ °ªÀ» ¹ÝÈ¯ÇÏ´Â ¼­ºêÄõ¸®ÀÌ´Ù.
+    2. ÀÏÄ¡ÇÏÁö ¾Ê´Â Á¤º¸´Â NULL°ªÀ» ¹ÝÈ¯ÇÑ´Ù.
+    3. À¯»çÇÑ ¹æ½ÄÀÇ Á¶ÀÎ ¹æ½ÄÀº ¿ÜºÎÁ¶ÀÎÀÌ´Ù.
 */
 
--- ë¶€ì„œë²ˆí˜¸ê°€ 1ì¸ ë¶€ì„œì— ê·¼ë¬´í•˜ëŠ” ì‚¬ì›ë²ˆí˜¸, ì‚¬ì›ëª…, ë¶€ì„œë²ˆí˜¸, ë¶€ì„œëª…ì„ ì¡°íšŒí•˜ì‹œì˜¤.
+-- ºÎ¼­¹øÈ£°¡ 1ÀÎ ºÎ¼­¿¡ ±Ù¹«ÇÏ´Â »ç¿ø¹øÈ£, »ç¿ø¸í, ºÎ¼­¹øÈ£, ºÎ¼­¸íÀ» Á¶È¸ÇÏ½Ã¿À.
 SELECT
         E.EMP_NO
       , E.NAME
@@ -251,7 +251,7 @@ SELECT
   FROM
         EMPLOYEE_TBL E;
         
--- ì°¸ê³ . ì¡°ì¸ìœ¼ë¡œ í’€ì–´ë³´ê¸°
+-- Âü°í. Á¶ÀÎÀ¸·Î Ç®¾îº¸±â
 SELECT
         E.EMP_NO
       , E.NAME
@@ -259,29 +259,3 @@ SELECT
       , D.DEPT_NAME
   FROM DEPARTMENT_TBL D  RIGHT OUTER JOIN EMPLOYEE_TBL E
     ON D.DEPT_NO = E.DEPART AND D.DEPT_NO = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

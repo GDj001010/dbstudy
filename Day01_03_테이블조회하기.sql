@@ -1,136 +1,115 @@
 /*
     DQL
     1. Data Query Language
-    2. ë°ì´í„° ì§ˆì˜(ì¡°íšŒ) ì–¸ì–´
-    3. í…Œì´ë¸”ì˜ ë°ì´í„°ë¥¼ ì¡°íšŒí•˜ëŠ” ì–¸ì–´ì´ë‹¤.
-    4. í…Œì´ë¸” ë‚´ìš©ì˜ ë³€ê²½ì´ ìƒê¸°ì§€ ì•ŠëŠ”ë‹¤.
-        (íŠ¸ëžœìž­ì…˜ì˜ ëŒ€ìƒì´ ì•„ë‹ˆê³ , COMMITì´ í•„ìš”í•˜ì§€ ì•Šë‹¤.)
-    5. í˜•ì‹([]ëŠ” ìƒëžµ ê°€ëŠ¥)
-        "SELECT ì¡°íšŒí• ì¹¼ëŸ¼, ì¡°íšŒí• ì¹¼ëŸ¼, ì¡°íšŒí• ì¹¼ëŸ¼", ....    â† SELECT ì ˆ
-        "FROM í…Œì´ë¸”ì´ë¦„"     â† FROM ì ˆ
-            [WHERE ì¡°ê±´ì‹]
-            [GROUP BY ê·¸ë£¹í™”í• ì¹¼ëŸ¼ [HAVING ê·¸ë£¹ì¡°ê±´ì‹]]
-            [ORDER BY ì •ë ¬í• ì¹¼ëŸ¼ ì •ë ¬ë°©ì‹]
-    6. ìˆœì„œ
-     â‘£SELECT ì¡°íšŒí• ì¹¼ëŸ¼, ì¡°íšŒí• ì¹¼ëŸ¼, ì¡°íšŒí• ì¹¼ëŸ¼, ...
-     â‘ FROM í…Œì´ë¸”ì´ë¦„
-     â‘¡[WHERE ì¡°ê±´ì‹]
-     â‘¢[GROUP BY ê·¸ë£¹í™”í• ì¹¼ëŸ¼ [(4)HAVING ê·¸ë£¹ì¡°ê±´ì‹]]
-     â‘¤[ORDER BY ì •ë ¬í• ì¹¼ëŸ¼ ì •ë ¬ë°©ì‹]
+    2. µ¥ÀÌÅÍ ÁúÀÇ(Á¶È¸) ¾ð¾î
+    3. Å×ÀÌºíÀÇ µ¥ÀÌÅÍ¸¦ Á¶È¸ÇÏ´Â ¾ð¾îÀÌ´Ù.
+    4. Å×ÀÌºí ³»¿ëÀÇ º¯°æÀÌ »ý±âÁö ¾Ê´Â´Ù.
+        (Æ®·£Àè¼ÇÀÇ ´ë»óÀÌ ¾Æ´Ï°í, COMMITÀÌ ÇÊ¿äÇÏÁö ¾Ê´Ù.)
+    5. Çü½Ä([]´Â »ý·« °¡´É)
+        "SELECT Á¶È¸ÇÒÄ®·³, Á¶È¸ÇÒÄ®·³, Á¶È¸ÇÒÄ®·³", ....    ¡ç SELECT Àý
+        "FROM Å×ÀÌºíÀÌ¸§"     ¡ç FROM Àý
+            [WHERE Á¶°Ç½Ä]
+            [GROUP BY ±×·ìÈ­ÇÒÄ®·³ [HAVING ±×·ìÁ¶°Ç½Ä]]
+            [ORDER BY Á¤·ÄÇÒÄ®·³ Á¤·Ä¹æ½Ä]
+    6. ¼ø¼­
+     ¨êSELECT Á¶È¸ÇÒÄ®·³, Á¶È¸ÇÒÄ®·³, Á¶È¸ÇÒÄ®·³, ...
+     ¨çFROM Å×ÀÌºíÀÌ¸§
+     ¨è[WHERE Á¶°Ç½Ä]
+     ¨é[GROUP BY ±×·ìÈ­ÇÒÄ®·³ [(4)HAVING ±×·ìÁ¶°Ç½Ä]]
+     ¨ë[ORDER BY Á¤·ÄÇÒÄ®·³ Á¤·Ä¹æ½Ä]
         
 */
 
 /*
-    íŠ¸ëžœìž­ì…˜
+    Æ®·£Àè¼Ç
     1. Transaction
-    2. ì—¬ëŸ¬ ê°œì˜ ì„¸ë¶€ ìž‘ì—…ìœ¼ë¡œ êµ¬ì„±ëœ í•˜ë‚˜ì˜ ìž‘ì—…ì„ ì˜ë¯¸í•œë‹¤.
-    3. ëª¨ë“  ì„¸ë¶€ ìž‘ì—…ì´ ì„±ê³µí•˜ë©´ COMMIT(ì €ìž¥)í•˜ê³ , í•˜ë‚˜ë¼ë„ ì‹¤íŒ¨í•˜ë©´ ëª¨ë“  ì„¸ë¶€ ìž‘ì—…ì˜ ì·¨ì†Œë¥¼ ì§„í–‰í•œë‹¤. 
+    2. ¿©·¯ °³ÀÇ ¼¼ºÎ ÀÛ¾÷À¸·Î ±¸¼ºµÈ ÇÏ³ªÀÇ ÀÛ¾÷À» ÀÇ¹ÌÇÑ´Ù.
+    3. ¸ðµç ¼¼ºÎ ÀÛ¾÷ÀÌ ¼º°øÇÏ¸é COMMIT(ÀúÀå)ÇÏ°í, ÇÏ³ª¶óµµ ½ÇÆÐÇÏ¸é ¸ðµç ¼¼ºÎ ÀÛ¾÷ÀÇ Ãë¼Ò¸¦ ÁøÇàÇÑ´Ù. 
         (ALL or Nothing)
-    4. ì‚½ìž… ìˆ˜ì • ì‚­ì œ 3ê°€ì§€ ê°€ëŠ¥
+    4. »ðÀÔ ¼öÁ¤ »èÁ¦ 3°¡Áö °¡´É
 */
 
--- ì¡°íšŒ ì‹¤ìŠµ
--- 1. ì‚¬ì› í…Œì´ë¸”ì—ì„œ ì‚¬ì›ëª… ì¡°íšŒí•˜ê¸°
--- 1) ê¸°ë³¸ ë°©ì‹
+-- Á¶È¸ ½Ç½À
+-- 1. »ç¿ø Å×ÀÌºí¿¡¼­ »ç¿ø¸í Á¶È¸ÇÏ±â
+-- 1) ±âº» ¹æ½Ä
 
 SELECT ENAME
   FROM EMP;
 
--- 2) ì˜¤ë„ˆ ëª…ì‹œí•˜ê¸°(í…Œì´ë¸”ì„ ê°€ì§€ê³  ìžˆëŠ” ê³„ì •) 
+-- 2) ¿À³Ê ¸í½ÃÇÏ±â(Å×ÀÌºíÀ» °¡Áö°í ÀÖ´Â °èÁ¤) 
 SELECT ENAME
-  FROM SCOTT.EMP;     -- SCOTT ê³„ì •ì— ë“¤ì–´ìžˆëŠ” EMP í…Œì´ë¸”
+  FROM SCOTT.EMP;     -- SCOTT °èÁ¤¿¡ µé¾îÀÖ´Â EMP Å×ÀÌºí
 
 
--- 3) í…Œì´ë¸” ëª…ì‹œí•˜ê¸°(ì¹¼ëŸ¼ì„ ê°€ì§€ê³  ìžˆëŠ” í…Œì´ë¸”) 
-SELECT EMP.ENAME  -- EMP í…Œì´ë¸”ì˜ ENAME ì¹¼ëŸ¼
+-- 3) Å×ÀÌºí ¸í½ÃÇÏ±â(Ä®·³À» °¡Áö°í ÀÖ´Â Å×ÀÌºí) 
+SELECT EMP.ENAME  -- EMP Å×ÀÌºíÀÇ ENAME Ä®·³
   FROM EMP;
 
 
--- 4) í…Œì´ë¸” ë³„ëª… ì§€ì •í•˜ê¸°
+-- 4) Å×ÀÌºí º°¸í ÁöÁ¤ÇÏ±â
 SELECT E.ENAME
-  FROM EMP E;         -- ì¿¼ë¦¬ ì•ˆì— EMP í…Œì´ë¸”ì˜ ë³„ëª…ì„ Eë¡œ ë¶€ì—¬í•œë‹¤.(Eë¡œ ë°”ë€ŒëŠ” ê²Œ ì•„ë‹˜)  AS(ALIAS)ë¥¼ ì‚¬ìš©í•  ìˆ˜ ì—†ë‹¤.
+  FROM EMP E;         -- Äõ¸® ¾È¿¡ EMP Å×ÀÌºíÀÇ º°¸íÀ» E·Î ºÎ¿©ÇÑ´Ù.(E·Î ¹Ù²î´Â °Ô ¾Æ´Ô)  AS(ALIAS)¸¦ »ç¿ëÇÒ ¼ö ¾ø´Ù.
 
--- 5) ì¹¼ëŸ¼ ë³„ëª… ì§€ì •í•˜ê¸°
-SELECT E.ENAME AS ì‚¬ì›ëª…      -- ENAME â†’ ì‚¬ì›ëª…ìœ¼ë¡œ ì¹¼ëŸ¼ì˜ ë³„ëª…ì„ ë°”ê¿ˆ AS(ALIAS)ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìžˆë‹¤.
+-- 5) Ä®·³ º°¸í ÁöÁ¤ÇÏ±â
+SELECT E.ENAME AS »ç¿ø¸í      -- ENAME ¡æ »ç¿ø¸íÀ¸·Î Ä®·³ÀÇ º°¸íÀ» ¹Ù²Þ AS(ALIAS)¸¦ »ç¿ëÇÒ ¼ö ÀÖ´Ù.
   FROM EMP E;
 
 
 
--- 2. ì‚¬ì› í…Œì´ë¸”ì˜ ëª¨ë“  ì¹¼ëŸ¼ ì¡°íšŒí•˜ê¸°
--- 1) * í™œìš©í•˜ê¸°(*ëŠ” ëª¨ë“  ì¹¼ëŸ¼ì„ ì˜ë¯¸í•œë‹¤.)
+-- 2. »ç¿ø Å×ÀÌºíÀÇ ¸ðµç Ä®·³ Á¶È¸ÇÏ±â
+-- 1) * È°¿ëÇÏ±â(*´Â ¸ðµç Ä®·³À» ÀÇ¹ÌÇÑ´Ù.)
 SELECT *
   FROM EMP;
   
--- 2) ëª¨ë“  ì¹¼ëŸ¼ ì§ì ‘ ìž‘ì„±í•˜ê¸°
+-- 2) ¸ðµç Ä®·³ Á÷Á¢ ÀÛ¼ºÇÏ±â
 SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
   FROM EMP;
   
--- 3. ë™ì¼í•œ ë°ì´í„°ëŠ” í•œ ë²ˆë§Œ ì¡°íšŒí•˜ê¸°
+-- 3. µ¿ÀÏÇÑ µ¥ÀÌÅÍ´Â ÇÑ ¹ø¸¸ Á¶È¸ÇÏ±â
 SELECT DISTINCT JOB
   FROM EMP;
 
 
 
--- 4. JOBì´ MANAGERì¸ ì‚¬ì› ëª©ë¡ ì¡°íšŒí•˜ê¸°
+-- 4. JOBÀÌ MANAGERÀÎ »ç¿ø ¸ñ·Ï Á¶È¸ÇÏ±â
 SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
   FROM EMP
- WHERE JOB = 'MANAGER';         -- DBì—ì„  "=" â† ê°™ë‹¤ë¼ëŠ” ëœ» 
+ WHERE JOB = 'MANAGER';         -- DB¿¡¼± "=" ¡ç °°´Ù¶ó´Â ¶æ 
  
 SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
   FROM EMP
  WHERE JOB IN('MANAGER');       
 
--- 5.SALì´ 1500 ì´ˆê³¼ì¸ ì‚¬ì› ëª©ë¡ ì¡°íšŒí•˜ê¸°
+-- 5.SALÀÌ 1500 ÃÊ°úÀÎ »ç¿ø ¸ñ·Ï Á¶È¸ÇÏ±â
 SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
   FROM EMP
  WHERE SAL > 1500;  
-
--- 6. SALì´ 2000 ~ 2999 ì‚¬ì´ì¸ ì‚¬ì› ëª©ë¡ ì¡°íšŒí•˜ê¸°
+ 
+-- 6. SALÀÌ 2000 ~ 2999 »çÀÌÀÎ »ç¿ø ¸ñ·Ï Á¶È¸ÇÏ±â
 SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
   FROM EMP
  WHERE SAL BETWEEN 2000 AND 2999;  
 
--- 7. COMMì„ ë°›ëŠ” ì‚¬ì› ëª©ë¡ ì¡°íšŒí•˜ê¸°
--- NULL ì²´í¬í•˜ëŠ” ì½”ë“œ
---  1) NULL ì´ë‹¤      : IS NULL
---  2) NULL ì•„ë‹ˆë‹¤    : IS NOT NULL
+-- 7. COMMÀ» ¹Þ´Â »ç¿ø ¸ñ·Ï Á¶È¸ÇÏ±â
+-- NULL Ã¼Å©ÇÏ´Â ÄÚµå
+--  1) NULL ÀÌ´Ù      : IS NULL
+--  2) NULL ¾Æ´Ï´Ù    : IS NOT NULL
 SELECT EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO
   FROM EMP
  WHERE COMM IS NOT NULL 
    AND COMM != 0;
 
 
--- 8. ENAMEì´ Aë¡œ ì‹œìž‘í•˜ëŠ” ì‚¬ì› ëª©ë¡ ì¡°íšŒí•˜ê¸°  
+-- 8. ENAMEÀÌ A·Î ½ÃÀÛÇÏ´Â »ç¿ø ¸ñ·Ï Á¶È¸ÇÏ±â  
 --    1) WILD CARD
---      (1) %   : ê¸€ìž ìˆ˜ ì œí•œ ì—†ëŠ” ëª¨ë“  ë¬¸ìž  ì£¼ë¡œ ì‚¬ìš©
---      (2) _   : 1ê¸€ìžë¡œ ì œí•œ ëœ ëª¨ë“  ë¬¸ìž
---    2) ì—°ì‚°ìž
---      (1) LIKE        : WILD CARDë¥¼ í¬í•¨í•œë‹¤.
---      (2) NOT LIKE    : WILD CARDë¥¼ í¬í•¨í•˜ì§€ ì•ŠëŠ”ë‹¤.
---          A%      : Aë¡œ ì‹œìž‘í•˜ëŠ” ëª¨ë“  ë¬¸ìž
---          %A      : Aë¡œ ëë‚˜ëŠ” ëª¨ë“  ë¬¸ìž
---          %A%     :  Aê°€ ì–´ë””ì—ë“  ë“¤ì–´ê°€ëŠ” ëª¨ë“  ë¬¸ìž
+--      (1) %   : ±ÛÀÚ ¼ö Á¦ÇÑ ¾ø´Â ¸ðµç ¹®ÀÚ  ÁÖ·Î »ç¿ë
+--      (2) _   : 1±ÛÀÚ·Î Á¦ÇÑ µÈ ¸ðµç ¹®ÀÚ
+--    2) ¿¬»êÀÚ
+--      (1) LIKE        : WILD CARD¸¦ Æ÷ÇÔÇÑ´Ù.
+--      (2) NOT LIKE    : WILD CARD¸¦ Æ÷ÇÔÇÏÁö ¾Ê´Â´Ù.
+--          A%      : A·Î ½ÃÀÛÇÏ´Â ¸ðµç ¹®ÀÚ
+--          %A      : A·Î ³¡³ª´Â ¸ðµç ¹®ÀÚ
+--          %A%     :  A°¡ ¾îµð¿¡µç µé¾î°¡´Â ¸ðµç ¹®ÀÚ
 SELECT EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO
   FROM EMP
- WHERE ENAME LIKE 'A%';  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ WHERE ENAME LIKE 'A%';

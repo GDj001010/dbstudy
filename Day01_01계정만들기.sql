@@ -1,25 +1,23 @@
--- ë‹¨ì¼í–‰ ì£¼ì„(single coment)
+-- ´ÜÀÏÇà ÁÖ¼®(single coment)
 /*
-    ë‹¤ì¤‘ í–‰ ì£¼ì„
+    ´ÙÁß Çà ÁÖ¼®
 */
 /*
-    1. SYS, SYSTEM ê³„ì •ì€ ê´€ë¦¬ ê³„ì •ì´ë¯€ë¡œ í•´ë‹¹ ê³„ì •ì—ì„œ ìž‘ì—…í•˜ì§€ ì•ŠëŠ”ë‹¤.
-    2. ìƒˆë¡œìš´ ê³„ì •ì„ ë§Œë“¤ê³ , í•´ë‹¹ ê³„ì •ìœ¼ë¡œ ì ‘ì†í•´ì„œ ìž‘ì—…ì„ ìˆ˜í–‰í•œë‹¤.
-    3. ìƒˆë¡œìš´ ê³„ì •ì„ ë§Œë“œëŠ” ìž‘ì—…ì€ SYS,SYSTEM ê³„ì •ì—ì„œ ì²˜ë¦¬í•œë‹¤.
-    4. ìƒˆë¡œìš´ ê³„ì •ì„ ë§Œë“œëŠ” ë°©ë²•
-        1) DROP USER ê³„ì •ì´ë¦„ CASCADE : ê¸°ì¡´ì— ìƒì„±ëœ ê³„ì •ì´ ìžˆë‹¤ë©´ ì‚­ì œí•˜ì‹œì˜¤. CASCADEëŠ” ê³„ì •ì´ ê°€ì§„ ë°ì´í„°ë„ í•¨ê»˜ ì‚­ì œí•˜ë¼ëŠ” ì˜µì…˜ì´ë‹¤.
-        2) CREATE USER ê³„ì •ì´ë¦„ IDENTIFIED BY ë¹„ë°€ë²ˆí˜¸ : ê³„ì • ë§Œë“¤ê¸°
-        3) GRANT ê¶Œí•œ TO ê³„ì •ì´ë¦„ : ìƒì„±ëœ ê³„ì •ì— ê¶Œí•œ ë¶€ì—¬(CONNECT, RESOURCE, DBA)
+    1. SYS, SYSTEM °èÁ¤Àº °ü¸® °èÁ¤ÀÌ¹Ç·Î ÇØ´ç °èÁ¤¿¡¼­ ÀÛ¾÷ÇÏÁö ¾Ê´Â´Ù.
+    2. »õ·Î¿î °èÁ¤À» ¸¸µé°í, ÇØ´ç °èÁ¤À¸·Î Á¢¼ÓÇØ¼­ ÀÛ¾÷À» ¼öÇàÇÑ´Ù.
+    3. »õ·Î¿î °èÁ¤À» ¸¸µå´Â ÀÛ¾÷Àº SYS,SYSTEM °èÁ¤¿¡¼­ Ã³¸®ÇÑ´Ù.
+    4. »õ·Î¿î °èÁ¤À» ¸¸µå´Â ¹æ¹ý
+        1) DROP USER °èÁ¤ÀÌ¸§ CASCADE : ±âÁ¸¿¡ »ý¼ºµÈ °èÁ¤ÀÌ ÀÖ´Ù¸é »èÁ¦ÇÏ½Ã¿À. CASCADE´Â °èÁ¤ÀÌ °¡Áø µ¥ÀÌÅÍµµ ÇÔ²² »èÁ¦ÇÏ¶ó´Â ¿É¼ÇÀÌ´Ù.
+        2) CREATE USER °èÁ¤ÀÌ¸§ IDENTIFIED BY ºñ¹Ð¹øÈ£ : °èÁ¤ ¸¸µé±â
+        3) GRANT ±ÇÇÑ TO °èÁ¤ÀÌ¸§ : »ý¼ºµÈ °èÁ¤¿¡ ±ÇÇÑ ºÎ¿©(CONNECT, RESOURCE, DBA)
 */
     
 /*
-    ì¿¼ë¦¬ë¬¸ ì‹¤í–‰í•˜ëŠ” ë°©ë²•
-    1. ì„ íƒ ì¿¼ë¦¬ ì‹¤í–‰ : Ctrl + Enter
-    2. ëª¨ë“  ì¿¼ë¦¬ ì‹¤í–‰ : F5 (ìƒˆë¡œ ê³ ì¹¨ ì•„ë‹˜ ì£¼ì˜!)
+    Äõ¸®¹® ½ÇÇàÇÏ´Â ¹æ¹ý
+    1. ¼±ÅÃ Äõ¸® ½ÇÇà : Ctrl + Enter
+    2. ¸ðµç Äõ¸® ½ÇÇà : F5 (»õ·Î °íÄ§ ¾Æ´Ô ÁÖÀÇ!)
 */
 
 DROP USER GDJ61 CASCADE;
 CREATE USER GDJ61 IDENTIFIED BY 1111;
 GRANT DBA TO GDJ61;
-
-
