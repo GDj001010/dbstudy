@@ -1,83 +1,83 @@
 /*
-    KEY Á¦¾àÁ¶°Ç
-    1. ±âº»Å°(PK) PRIMARY KEY
-        1) °³Ã¼¹«°á¼º
-        2) PK´Â NOT NULL + UNIQUE ÇØ¾ß ÇÑ´Ù.
-    2. ¿Ü·¡Å°(FK) FOREIGN KEY
-        1) ÂüÁ¶¹«°á¼º
-        2) FK´Â ÂüÁ¶ÇÏ´Â °ª¸¸ °¡Áú ¼ö ÀÖ´Ù.
+    KEY ì œì•½ì¡°ê±´
+    1. ê¸°ë³¸í‚¤(PK) PRIMARY KEY
+        1) ê°œì²´ë¬´ê²°ì„±
+        2) PKëŠ” NOT NULL + UNIQUE í•´ì•¼ í•œë‹¤.
+    2. ì™¸ëž˜í‚¤(FK) FOREIGN KEY
+        1) ì°¸ì¡°ë¬´ê²°ì„±
+        2) FKëŠ” ì°¸ì¡°í•˜ëŠ” ê°’ë§Œ ê°€ì§ˆ ìˆ˜ ìžˆë‹¤.
 */
 /*
-    ÀÏ´ë´Ù°ü°è(1:M) °ü°è
-    1. PK¿Í FK¸¦ °¡Áø Å×ÀÌºí °£ÀÇ °ü°èÀÌ´Ù.
-        1) ºÎ¸ð Å×ÀÌºí : 1, PK¸¦ °¡Áø Å×ÀÌºí
-        2) ÀÚ½Ä Å×ÀÌºí : M, FK¸¦ °¡Áø Å×ÀÌºí
-    2. »ý¼º°ú »èÁ¦ ±ÔÄ¢
-        1) »ý¼º ±ÔÄ¢ : "¹Ýµå½Ã" ºÎ¸ð Å×ÀÌºíÀ» ¸ÕÀú »ý¼ºÇÑ´Ù.
-        2) »èÁ¦ ±ÔÄ¢ : "¹Ýµå½Ã" ÀÚ½Ä Å×ÀÌºíÀ» ¸ÕÀú »èÁ¦ÇÑ´Ù.
+    ì¼ëŒ€ë‹¤ê´€ê³„(1:M) ê´€ê³„
+    1. PKì™€ FKë¥¼ ê°€ì§„ í…Œì´ë¸” ê°„ì˜ ê´€ê³„ì´ë‹¤.
+        1) ë¶€ëª¨ í…Œì´ë¸” : 1, PKë¥¼ ê°€ì§„ í…Œì´ë¸”
+        2) ìžì‹ í…Œì´ë¸” : M, FKë¥¼ ê°€ì§„ í…Œì´ë¸”
+    2. ìƒì„±ê³¼ ì‚­ì œ ê·œì¹™
+        1) ìƒì„± ê·œì¹™ : "ë°˜ë“œì‹œ" ë¶€ëª¨ í…Œì´ë¸”ì„ ë¨¼ì € ìƒì„±í•œë‹¤.
+        2) ì‚­ì œ ê·œì¹™ : "ë°˜ë“œì‹œ" ìžì‹ í…Œì´ë¸”ì„ ë¨¼ì € ì‚­ì œí•œë‹¤.
 */
 /*
-    ¿Ü·¡Å° Á¦¾àÁ¶°Ç ¿É¼Ç
-    ºÎ¸ð°¡ Áö¿öÁ³À» ¶§ "ÂüÁ¶¹«°á¼º" À§¹è°¡ ³ª¿È - FK
-    1. ºÎ¸ð°¡ Áö¿öÁ³À» ¶§¸¦ ´ëºñÇÑ ¿É¼Ç ONDELETE
-        1) ºÎ¸ð°¡ Á×À¸¸é ³ªµµ Á×´Â´Ù ( °°ÀÌ Áö¿ö¹ö¸² ) 
+    ì™¸ëž˜í‚¤ ì œì•½ì¡°ê±´ ì˜µì…˜
+    ë¶€ëª¨ê°€ ì§€ì›Œì¡Œì„ ë•Œ "ì°¸ì¡°ë¬´ê²°ì„±" ìœ„ë°°ê°€ ë‚˜ì˜´ - FK
+    1. ë¶€ëª¨ê°€ ì§€ì›Œì¡Œì„ ë•Œë¥¼ ëŒ€ë¹„í•œ ì˜µì…˜ ONDELETE
+        1) ë¶€ëª¨ê°€ ì£½ìœ¼ë©´ ë‚˜ë„ ì£½ëŠ”ë‹¤ ( ê°™ì´ ì§€ì›Œë²„ë¦¼ ) 
             CASCADE
             ON DELETE CASCADE
-        2) ºÎ¸ð°¡ Á×À¸¸é NULL Ã³¸® ÇÑ´Ù (ÁÖ¹®³»¿ªÀº »ì¸®¸é¼­ FK Ä­¸¸ NULL Ã³¸® )
+        2) ë¶€ëª¨ê°€ ì£½ìœ¼ë©´ NULL ì²˜ë¦¬ í•œë‹¤ (ì£¼ë¬¸ë‚´ì—­ì€ ì‚´ë¦¬ë©´ì„œ FK ì¹¸ë§Œ NULL ì²˜ë¦¬ )
             SET NULL
             ON DELETE SET NULL
 */
 /*
-    ¿Ü·¡Å° Á¦¾à Á¶°ÇÀÇ ¿É¼Ç
-    1. ON DELETE CASCADE  ½Ç¼±
-        1) ÂüÁ¶ ÁßÀÎ PARENT KEY°¡ »èÁ¦µÇ¸é ÇØ´ç PARENT KEY¸¦ °¡Áø Çà ÀüÃ¼¸¦ ÇÔ²² »èÁ¦ÇÑ´Ù.
-        2) ¿¹½Ã) È¸¿ø Å»Åð ½Ã ÀÛ¼ºÇÑ ¸ðµç °Ô½Ã±ÛÀÌ ÇÔ²² »èÁ¦µË´Ï´Ù.
-                 °Ô½Ã±Û »èÁ¦ ½Ã ÇØ´ç °Ô½Ã±Û¿¡ ´Þ¸° ¸ðµç ´ñ±ÛÀÌ ÇÔ²² »èÁ¦µË´Ï´Ù.
-    2. ON DELETE SET NULL  Á¡¼±
-        1) ÂüÁ¶ ÁßÀÎ PARENT KEY°¡ »èÁ¦µÇ¸é ÇØ´ç PARENT KEY¸¦ °¡Áø Ä®·³ °ª¸¸ NULL·Î Ã³¸®ÇÑ´Ù.
-        2) ¿¹½Ã) ¾î¶² »óÇ°À» Á¦°ÅÇÏ¿´À¸³ª ÇØ´ç »óÇ°ÀÇ ÁÖ¹® ³»¿ªÀº ³²¾Æ ÀÖ´Â °æ¿ì
+    ì™¸ëž˜í‚¤ ì œì•½ ì¡°ê±´ì˜ ì˜µì…˜
+    1. ON DELETE CASCADE  ì‹¤ì„ 
+        1) ì°¸ì¡° ì¤‘ì¸ PARENT KEYê°€ ì‚­ì œë˜ë©´ í•´ë‹¹ PARENT KEYë¥¼ ê°€ì§„ í–‰ ì „ì²´ë¥¼ í•¨ê»˜ ì‚­ì œí•œë‹¤.
+        2) ì˜ˆì‹œ) íšŒì› íƒˆí‡´ ì‹œ ìž‘ì„±í•œ ëª¨ë“  ê²Œì‹œê¸€ì´ í•¨ê»˜ ì‚­ì œë©ë‹ˆë‹¤.
+                 ê²Œì‹œê¸€ ì‚­ì œ ì‹œ í•´ë‹¹ ê²Œì‹œê¸€ì— ë‹¬ë¦° ëª¨ë“  ëŒ“ê¸€ì´ í•¨ê»˜ ì‚­ì œë©ë‹ˆë‹¤.
+    2. ON DELETE SET NULL  ì ì„ 
+        1) ì°¸ì¡° ì¤‘ì¸ PARENT KEYê°€ ì‚­ì œë˜ë©´ í•´ë‹¹ PARENT KEYë¥¼ ê°€ì§„ ì¹¼ëŸ¼ ê°’ë§Œ NULLë¡œ ì²˜ë¦¬í•œë‹¤.
+        2) ì˜ˆì‹œ) ì–´ë–¤ ìƒí’ˆì„ ì œê±°í•˜ì˜€ìœ¼ë‚˜ í•´ë‹¹ ìƒí’ˆì˜ ì£¼ë¬¸ ë‚´ì—­ì€ ë‚¨ì•„ ìžˆëŠ” ê²½ìš°
 */
--- Å×ÀÌºí »èÁ¦               »èÁ¦¸¦ ¸ô¾Æ¼­ À§ÂÊ¿¡ ¹èÄ¡, »ý¼ºÀº ¾Æ·¡ÂÊ ¹èÄ¡
-DROP TABLE ORDER_TBL;           -- ÀÚ½Ä Å×ÀÌºí ¸ÕÀú »èÁ¦ ÈÄ ºÎ¸ð Å×ÀÌºí »èÁ¦
+-- í…Œì´ë¸” ì‚­ì œ               ì‚­ì œë¥¼ ëª°ì•„ì„œ ìœ„ìª½ì— ë°°ì¹˜, ìƒì„±ì€ ì•„ëž˜ìª½ ë°°ì¹˜
+DROP TABLE ORDER_TBL;           -- ìžì‹ í…Œì´ë¸” ë¨¼ì € ì‚­ì œ í›„ ë¶€ëª¨ í…Œì´ë¸” ì‚­ì œ
 DROP TABLE PRODUCT_TBL;
 
--- Á¦Ç° Å×ÀÌºí (ºÎ¸ð Å×ÀÌºí)
+-- ì œí’ˆ í…Œì´ë¸” (ë¶€ëª¨ í…Œì´ë¸”)
 CREATE TABLE PRODUCT_TBL (
     PROD_NO NUMBER NOT NULL,        
     PROD_NAME VARCHAR2(10 BYTE),
     PROD_PRICE NUMBER,
     PROD_STOCK NUMBER,
-    CONSTRAINT PK_PROD PRIMARY KEY(PROD_NO)  -- PK ±âº»Å°
+    CONSTRAINT PK_PROD PRIMARY KEY(PROD_NO)  -- PK ê¸°ë³¸í‚¤
 );
 
--- ÁÖ¹® Å×ÀÌºí (ÀÚ½Ä Å×ÀÌºí)
+-- ì£¼ë¬¸ í…Œì´ë¸” (ìžì‹ í…Œì´ë¸”)
 CREATE TABLE ORDER_TBL (
     ORDER_NO NUMBER NOT NULL,
     USER_ID VARCHAR2(10 BYTE),
     PROD_NO NUMBER , 
     ORDER_DATE DATE,
-    CONSTRAINT PK_ORDER PRIMARY KEY(ORDER_NO),    -- PK ±âº»Å°
-    CONSTRAINT FK_ORDER_PROD FOREIGN KEY(PROD_NO) REFERENCES PRODUCT_TBL(PROD_NO) ON DELETE CASCADE  -- FK ¿Ü·¡Å°
+    CONSTRAINT PK_ORDER PRIMARY KEY(ORDER_NO),    -- PK ê¸°ë³¸í‚¤
+    CONSTRAINT FK_ORDER_PROD FOREIGN KEY(PROD_NO) REFERENCES PRODUCT_TBL(PROD_NO) ON DELETE CASCADE  -- FK ì™¸ëž˜í‚¤
 );
 
--- CONSTRAINT : Á¦¾àÁ¶°Ç
--- REFERENCES : ÂüÁ¶
+-- CONSTRAINT : ì œì•½ì¡°ê±´
+-- REFERENCES : ì°¸ì¡°
 
 /*
-    Á¦¾àÁ¶°Ç Å×ÀÌºí
-    1. SYS, SYSTEM °ü¸® °èÁ¤À¸·Î Á¢¼ÓÇØ¼­ È®ÀÎÇÑ´Ù.
-    2. Á¾·ù
+    ì œì•½ì¡°ê±´ í…Œì´ë¸”
+    1. SYS, SYSTEM ê´€ë¦¬ ê³„ì •ìœ¼ë¡œ ì ‘ì†í•´ì„œ í™•ì¸í•œë‹¤.
+    2. ì¢…ë¥˜
         1) ALL_CONSTRAINTS
-        2) USER_CONSTRAINTS   »ç¿ëÀÚ¿ë Á¦¾àÁ¶°Ç
+        2) USER_CONSTRAINTS   ì‚¬ìš©ìžìš© ì œì•½ì¡°ê±´
         3) DBA_CONSTRAINTS
-        _ µÚ¿¡ Á¶È¸ÇÒ ´ë»ó   ¿¹½Ã) USER_TABLE"S"  À¯Àú¿¡ Å×ÀÌºíµé
+        _ ë’¤ì— ì¡°íšŒí•  ëŒ€ìƒ   ì˜ˆì‹œ) USER_TABLE"S"  ìœ ì €ì— í…Œì´ë¸”ë“¤
         
 */
 
--- Å×ÀÌºí ±¸Á¶ È®ÀÎÇÏ´Â Äõ¸®¹® (¼³¸í)
+-- í…Œì´ë¸” êµ¬ì¡° í™•ì¸í•˜ëŠ” ì¿¼ë¦¬ë¬¸ (ì„¤ëª…)
 -- DESCRIBE USER_CONSTRAINTS;
 
--- Å×ÀÌºí¿¡ Ä®·³ Áß PK·Î ½ÃÀÛÇÏ´Â ·Î¿ì(Çà, °ª) Á¶È¸
+-- í…Œì´ë¸”ì— ì¹¼ëŸ¼ ì¤‘ PKë¡œ ì‹œìž‘í•˜ëŠ” ë¡œìš°(í–‰, ê°’) ì¡°íšŒ
 /*
 SELECT * 
   FROM ALL_CONSTRAINTS
