@@ -42,6 +42,51 @@ INSERT INTO DEPARTMENT_TBL(DEPT_NO, DEPT_NAME, LOCATION) VALUES(5, '치킨집', 
 COMMIT;
 
 
+/* 전달된 부서번호의 부서를 삭제하는 프로시저를 작성하시오. */
+-- 전달된 부서에 근무하는 모든 사원을 함께 삭제하시오.
+CREATE OR REPLACE PROCEDURE DELETE_PROC(DEPTNO IN DEPARTMENT_TBL.DEPT_NO%TYPE)
+IS
+-- 시험 때 변수가 필요하면 변수 선언 
+BEGIN
+    DELETE FROM EMPLOYEE_TBL
+      WHERE DEPART = DEPTNO;
+    DELETE FROM DEPARTMENT_TBL
+      WHERE DEPT_NO = DEPTNO;
+COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN                        -- 모든 EXCEPTION
+        DBMS_OUTPUT.PUT_LINE(SQLCODE);      -- SQLCODE : 예외코드
+        DBMS_OUTPUT.PUT_LINE(SQLERRM);      -- SQLERRM : 예외 메시지
+        ROLLBACK;
+END;
+
+-- 방법1
+EXECUTE DELETE_PROC(1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
