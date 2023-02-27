@@ -46,7 +46,7 @@ SELECT
 SELECT
         SYSDATE + 15    -- 15일 후 날짜
       , SYSDATE - 15    -- 15일 전 날짜
-      , SYSDATE - TO_DATE('22/10/07', 'YY/MM/DD')   -- 경과한 일수
+      , FLOOR(SYSDATE - TO_DATE('22/10/07', 'YY/MM/DD'))   -- 경과한 일수
   FROM DUAL;
 
 
